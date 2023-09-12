@@ -1,0 +1,22 @@
+.tab {  
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: #232323; 
+  padding: 1em 0;  
+  border: none;
+  color: white;
+}
+.tab.active {
+  font-weight: bold;
+  border-bottom: 1px solid #F65261; 
+  border-width: 5px;
+}
+.panel {
+  display: none;
+  background-color: #eaeaea;
+  padding: 1px;
+}
+.panel.active {
+  display: block;
+}
