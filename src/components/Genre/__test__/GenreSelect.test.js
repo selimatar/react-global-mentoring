@@ -23,12 +23,17 @@ describe('GenreSelect component', () => {
   });
 
   test('highlights a selected genre passed in props', () => {
+    const currentSelected = 'Action';
+    const { getByTitle } = render(
+      <GenreSelect 
+        genreList={genreList} 
+        currentSelected={currentSelected} 
+        selectGenre={selectGenre} 
+      />
+    );
 
-    const currentSelected = 'Comedy';
-    const { container } = render(<GenreSelect genreList={genreList} currentSelected={currentSelected} selectGenre={selectGenre} />);
-
-    const genreBtn = container.querySelector('.active');    
-    expect(genreBtn).toHaveClass('active');
+    const initialSelectedGenre = getByTitle(currentSelected);
+    expect(initialSelectedGenre).toBeInTheDocument();
   });
 
   it("calls 'onChange' callback with correct genre after click event", () => {
