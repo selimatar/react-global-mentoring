@@ -10,10 +10,16 @@ describe('GenreSelect component', () => {
   const currentSelected = 'Comedy';
   const selectGenre = jest.fn();
 
-  test("renders genre list component", () => {
-    render(<GenreSelect />);
-    const searchForm = screen.getByText(/Genre List Component/i);
-    expect(searchForm).toBeInTheDocument();
+  test("renders all genres passed in props", () => {
+    const { getAllByText } = render(
+      <GenreSelect genreList={genreList} currentSelected="Comedy" />
+    );
+  
+    // Check if all genre names are rendered
+    genreList.forEach((genre) => {
+      const genreElements = getAllByText(genre.name);
+      expect(genreElements.length).toBeGreaterThan(0);
+    });
   });
 
   test('highlights a selected genre passed in props', () => {

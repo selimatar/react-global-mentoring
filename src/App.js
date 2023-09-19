@@ -17,7 +17,7 @@ const selectGenre = (index) => {
 function App() {
   return (
     <>
-      <Counter />
+      <Counter initialCount={0}/>
       <SearchForm initialSearchQuery="" onSearch={handleSearch} />
       <GenreSelect genreList={genreList} currentSelected="All" selectGenre={selectGenre}/>
     </>
