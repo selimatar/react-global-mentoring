@@ -25,7 +25,7 @@ const GenreSelect = ({ genreList, currentSelected, selectGenre }) => {
             </div>
             <div className="panels">
                 <div className={`panel ${checkActive(activeIndex, "active")}`}>
-                    <p>{selectedGenre}</p>
+                    <p title={selectedGenre}>{selectedGenre}</p>
                 </div>
             </div>
         </div>
