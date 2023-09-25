@@ -1,5 +1,5 @@
 .search-input {
-  height: 40px;
+  height: 33px;
   width: 600px;
   border-radius: 4px;
 
@@ -29,12 +29,20 @@
 }
   
 .search-button {
-  height: 40px;
-  width: 100px;
-  left: 0px;
-  top: 0px;
-  border-radius: 4px;
-  margin-left: 14px;
-
+  height: 37px;
+  width: 90px;
+  margin-left: 15px;
   background: #F65261;
+  border: #F65261;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #ffff;
+  text-transform: uppercase;
+
+  font-family: Montserrat;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0px;
+  text-align: center;
 }
