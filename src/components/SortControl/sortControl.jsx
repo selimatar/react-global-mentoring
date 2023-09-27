@@ -1,5 +1,6 @@
 import React from 'react';
-import './sortControl.css'
+import './sortControl.css';
+
 const SortControl = ({ currentSelection, onSelectionChange }) => {
   const handleSelectionChange = (event) => {
     onSelectionChange(event.target.value);

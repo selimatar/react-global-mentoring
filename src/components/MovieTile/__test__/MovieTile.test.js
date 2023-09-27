@@ -25,8 +25,10 @@ describe("MovieTile", () => {
         onDelete={() => handleDeleteClick(movie)}
       />
     );
-    const movieTile = screen.getByTitle("movieTitle", {name: "movie tile component renders"});
-    expect(movieTile).toBeInTheDocument();
+    expect(screen.getByText(movie.title)).toBeInTheDocument();
+    expect(screen.getByText(movie.title)).toBeInTheDocument();
+    expect(screen.getByText(movie.releaseYear)).toBeInTheDocument();
+    expect(screen.getByText(movie.genres.join(', '))).toBeInTheDocument();
   });
 
   it("should render MovieDetail component after click event", () => {
@@ -39,8 +41,6 @@ describe("MovieTile", () => {
         onClick={() => {
           handleTileClick(movie);
         }}
-        onEdit={() => handleEditClick(movie)}
-        onDelete={() => handleDeleteClick(movie)}
       />
     );
   

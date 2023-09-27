@@ -6,7 +6,7 @@ export default {
   component: SortControl,
   argTypes: {
     currentSelection: { control: 'select', options: ['release-date', 'title'] },
-    handleSelectionChange: { action: "selection changed" }
+    onSelectionChange: { action: "selection changed" }
   },
 };
 
@@ -14,13 +14,13 @@ const Template = (args) => <SortControl {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-    currentSelection: 'title',
-    onSelectionChange: (value) => {
-        console.log(`Value has been changed with: ${value}`);
-    },
+  currentSelection: 'release-date',
+  onSelectionChange: (newSortBy) => {
+    console.log(`Selected sorting option: ${newSortBy}`);
+  },
 };
 
 export const WithRelaseDate = Template.bind({});
 WithRelaseDate.args = {
-    currentSelection: 'release-date',
+  currentSelection: 'release-date',
 };
