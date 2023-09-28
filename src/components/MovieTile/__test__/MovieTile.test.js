@@ -33,21 +33,26 @@ describe("MovieTile", () => {
 
   it("should render MovieDetail component after click event", () => {
     const MockMovieDetail = () => <div>Mock Movie Detail Component</div>;
+    // Create a mock function for the onClick event
     const handleTileClick = jest.fn();
-    const { getByTitle, getByText } = render(
-      <MovieTile
+
+    const { getByText, getByAltText } = render(
+      <MovieTile 
         key={movie.title}
-        movieInfo={movie}
-        onClick={() => {
-          handleTileClick(movie);
-        }}
+        movieInfo={movie} 
+        onClick={handleTileClick} 
       />
     );
-  
-    const movieDiv = getByTitle("movieTitle", {name: "movie div component to check click event"});
-    fireEvent.click(movieDiv);
-    render(<MockMovieDetail />)
+
+    const movieImage = getByAltText(movieList[3].title);
+    fireEvent.click(movieImage);
+    render(<MockMovieDetail />);
+
     const mockDetailElement = getByText(/Mock Movie Detail Component/i);
+    const movieDetailsText = getByText(movieList[3].title);
+    
     expect(mockDetailElement).toBeInTheDocument();
+    expect(movieDetailsText).toBeInTheDocument();
+    expect(handleTileClick).toHaveBeenCalled();
   });
 });
