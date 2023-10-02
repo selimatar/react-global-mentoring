@@ -1,0 +1,58 @@
+import { render, screen, fireEvent } from "@testing-library/react";
+import MovieTile from "../movieTile";
+import { movieList } from "../../../data/movies";
+
+describe("MovieTile", () => {
+  const movie = {
+    imageUrl: movieList[3].poster_path,
+    title: movieList[3].title,
+    releaseYear: movieList[3].release_date,
+    genres: movieList[3].genres,
+    description: movieList[3].overview,
+    duration: movieList[3].runtime,
+    rating: movieList[3].vote_average,
+  };
+  
+  test("renders movie tile component", () => {
+    render(
+      <MovieTile
+        key={movie.title}
+        movieInfo={movie}
+        onClick={() => {
+          handleTileClick(movie);
+        }}
+        onEdit={() => handleEditClick(movie)}
+        onDelete={() => handleDeleteClick(movie)}
+      />
+    );
+    expect(screen.getByText(movie.title)).toBeInTheDocument();
+    expect(screen.getByText(movie.title)).toBeInTheDocument();
+    expect(screen.getByText(movie.releaseYear)).toBeInTheDocument();
+    expect(screen.getByText(movie.genres.join(', '))).toBeInTheDocument();
+  });
+
+  it("should render MovieDetail component after click event", () => {
+    const MockMovieDetail = () => <div>Mock Movie Detail Component</div>;
+    // Create a mock function for the onClick event
+    const handleTileClick = jest.fn();
+
+    const { getByText, getByAltText } = render(
+      <MovieTile 
+        key={movie.title}
+        movieInfo={movie} 
+        onClick={handleTileClick} 
+      />
+    );
+
+    const movieImage = getByAltText(movieList[3].title);
+    fireEvent.click(movieImage);
+    render(<MockMovieDetail />);
+
+    const mockDetailElement = getByText(/Mock Movie Detail Component/i);
+    const movieDetailsText = getByText(movieList[3].title);
+    
+    expect(mockDetailElement).toBeInTheDocument();
+    expect(movieDetailsText).toBeInTheDocument();
+    expect(handleTileClick).toHaveBeenCalled();
+  });
+});
