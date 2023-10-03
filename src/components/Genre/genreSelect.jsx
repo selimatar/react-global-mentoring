@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import Genre from "./genre";
 import "./genre-list.css";
 
-const GenreSelect = ({ genreList, currentSelected, selectGenre }) => {
-    const [selectedGenre, setSelectedGenre] = useState(currentSelected);
+const GenreSelect = ({ genreList, activeGenre, setActiveGenre, selectGenre }) => {
     const [activeIndex, setActiveIndex] = useState(1);
     const checkActive = (index, className) => activeIndex === index ? className : "";
 
     const handleClick = (index) => {
         const existedGenre = selectGenre(index);
         if(existedGenre) {
-            setSelectedGenre(existedGenre.name);
+            setActiveGenre(existedGenre.name);
         }
         setActiveIndex(index);
     };
@@ -25,7 +24,7 @@ const GenreSelect = ({ genreList, currentSelected, selectGenre }) => {
             </div>
             <div className="panels">
                 <div className={`panel ${checkActive(activeIndex, "active")}`}>
-                    <p title={selectedGenre}>{selectedGenre}</p>
+                    <p title={activeGenre}>{activeGenre}</p>
                 </div>
             </div>
         </div>

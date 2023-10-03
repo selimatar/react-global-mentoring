@@ -8,12 +8,6 @@ const SearchForm = ({ initialQuery, onSearch }) => {
     setQuery(event.target.value);
   };
 
-  const handleSearch = () => {
-    if(query) {
-      onSearch(query);
-    }
-  };
-
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       onSearch(query);
@@ -31,7 +25,7 @@ const SearchForm = ({ initialQuery, onSearch }) => {
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
       />
-      <button type="submit" className="search-button" onClick={handleSearch}>Search</button>
+      <button type="submit" className="search-button" onClick={onSearch(query)}>Search</button>
     </div>
   );
 }
