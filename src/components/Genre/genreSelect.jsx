@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import Genre from "./genre";
-import "./genre-list.css";
+import React, { useState, useEffect } from 'react';
+import Genre from './genre';
+import './genre-list.css';
 
 const GenreSelect = ({ genreList, activeGenre, setActiveGenre, selectGenre }) => {
     const [activeIndex, setActiveIndex] = useState(1);
