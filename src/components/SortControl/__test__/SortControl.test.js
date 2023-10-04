@@ -7,7 +7,7 @@ describe("SortControl", () => {
     const mockOnSelectionChange = jest.fn();
 
     render(
-      <SortControl currentSelection="release-date" onSelectionChange={mockOnSelectionChange} />
+      <SortControl currentSelection="title" onSelectionChange={mockOnSelectionChange} />
     );
 
     const sortSelectInput = screen.getByRole("combobox");

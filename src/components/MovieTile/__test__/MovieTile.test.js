@@ -35,7 +35,7 @@ describe("MovieTile", () => {
     );
     expect(screen.getByText(movie.title)).toBeInTheDocument();
     expect(screen.getByText(movie.title)).toBeInTheDocument();
-    expect(screen.getByText(movie.releaseYear)).toBeInTheDocument();
+    expect(screen.getByText(movie.release_date.substring(0, 4))).toBeInTheDocument();
     expect(screen.getByText(movie.genres.join(', '))).toBeInTheDocument();
   });
 
@@ -52,12 +52,12 @@ describe("MovieTile", () => {
       />
     );
 
-    const movieImage = getByAltText(movieList[3].title);
+    const movieImage = getByAltText(movie.title);
     fireEvent.click(movieImage);
     render(<MockMovieDetail />);
 
     const mockDetailElement = getByText(/Mock Movie Detail Component/i);
-    const movieDetailsText = getByText(movieList[3].title);
+    const movieDetailsText = getByText(movie.title);
     
     expect(mockDetailElement).toBeInTheDocument();
     expect(movieDetailsText).toBeInTheDocument();

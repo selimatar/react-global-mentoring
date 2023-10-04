@@ -22,11 +22,11 @@ describe('MovieForm', () => {
     // Check that onSubmit was called with the expected movie data
     expect(mockOnSubmit).toHaveBeenCalledTimes(1);
     expect(mockOnSubmit).toHaveBeenCalledWith({
-      title: 'New Movie',
-      releaseDate: '2023-05-13',
-      movieUrl: 'https://example.com/movie.png',
-      rating: 'PG-13',
-      description: 'This is a new movie'
+      descriptionInput: "This is a new movie",
+      movieUrlInput : "https://example.com/movie.png",
+      ratingInput: "PG-13",
+      releaseDateInput: "2023-05-13",
+      titleInput: "New Movie"
     });
   });
 
@@ -34,7 +34,7 @@ describe('MovieForm', () => {
     const { getByLabelText, getByText } = render(
       <MovieForm
         initialMovieInfo={{
-          title: 'Existing Movie',
+          title: 'Updated Movie',
           releaseDate: '2023-05-15',
           imageUrl: 'https://example.com/movie',
           rating: '4.5',
@@ -60,9 +60,4 @@ describe('MovieForm', () => {
       duration: ''
     });
   });
-
-  // it('should submit the form with empty movie data when deleteMovie is called', () => {
-  //   const onSubmitMock = jest.fn();
-  //   //will be filled
-  // });
 });
