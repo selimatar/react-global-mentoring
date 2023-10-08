@@ -1,0 +1,20 @@
+.add-movie-button {
+    /*position: absolute; */
+    margin-left: 40px;
+    height: 46px;
+    width: 177px;
+    background: #F65261;
+    border-radius: 4px;
+    border: #F65261;
+    cursor: pointer;
+
+    color: #ffff;
+    text-transform: uppercase;
+
+    font-family: Montserrat;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0px;
+    text-align: center;
+}

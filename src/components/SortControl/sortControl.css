@@ -22,12 +22,13 @@
 
 .release-date {
     height: 20px;
-    margin-left: 30px;
+    width: 135px;
+    margin-left: 10px;
 
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 20px;
     /* identical to box height */
 
