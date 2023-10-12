@@ -10,17 +10,17 @@ const MovieDetails = (props) => {
         <h2>Movie Details Component</h2>
         <div className="movie-details" title="movie-details">
           <div className="movie-image">
-            <img style={{height: "400px"}} alt={props.movie.movieName} src={props.movie.imageUrl} />
+            <img style={{height: "400px"}} alt={props.movie.title} src={props.movie.poster_path} />
           </div>
           <div className="movie-information">
             <div className="movie-header">
-              <p className="movie-title">{props.movie.movieName}</p>
-              <span className="movie-avarage">{props.movie.rating}</span>
+              <p className="movie-title">{props.movie.title}</p>
+              <span className="movie-avarage">{props.movie.avarage}</span>
             </div>
             <span className="movie-genres">{genres}</span>
-            <p className="movie-release">{props.movie.releaseYear}</p>
-            <p className="movie-duration">{props.movie.duration}</p>
-            <p className="movie-description">{props.movie.description}</p>
+            <p className="movie-release">{props.movie.release_date}</p>
+            <p className="movie-duration">{props.movie.runtime}</p>
+            <p className="movie-description">{props.movie.overview}</p>
           </div>
         </div>
       </div>

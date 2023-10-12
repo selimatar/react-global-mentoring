@@ -1,6 +1,6 @@
 import React from 'react';
-import MovieForm from '../components/MovieForm/movieForm';
-import Dialog from '../components/Dialog/dialog';
+import MovieForm from '../../components/MovieForm/movieForm';
+import Dialog from '../../components/Dialog/dialog';
 
 export default {
   title: 'MovieDialog',

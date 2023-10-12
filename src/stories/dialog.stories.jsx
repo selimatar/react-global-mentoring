@@ -1,5 +1,5 @@
 import React from 'react';
-import Dialog from '../components/Dialog/dialog';
+import Dialog from '../../components/Dialog/dialog';
 
 export default {
   title: 'Dialog',

@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import GenreSelect from "../GenreSelect";
+import GenreSelect from "../genreSelect";
 
 describe('GenreSelect component', () => {
   const genreList = [
@@ -12,7 +12,7 @@ describe('GenreSelect component', () => {
 
   test("renders all genres passed in props", () => {
     const { getAllByText } = render(
-      <GenreSelect genreList={genreList} currentSelected="Comedy" />
+      <GenreSelect genreList={genreList} activeGenre="Comedy" />
     );
   
     // Check if all genre names are rendered
@@ -27,7 +27,7 @@ describe('GenreSelect component', () => {
     const { getByTitle } = render(
       <GenreSelect 
         genreList={genreList} 
-        currentSelected={currentSelected} 
+        activeGenre={currentSelected} 
         selectGenre={selectGenre} 
       />
     );
@@ -40,7 +40,7 @@ describe('GenreSelect component', () => {
     const { getByText } = render(
       <GenreSelect
         genreList={genreList}
-        currentSelected={currentSelected}
+        activeGenre={currentSelected}
         selectGenre={selectGenre}
       />
     );
