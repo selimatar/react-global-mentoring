@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams, Outlet, useNavigate } from "react-router-dom";
 import SearchForm from '../Search/searchForm';
 import Dialog from '../Dialog/dialog';
 import MovieForm from '../MovieForm/movieForm';
@@ -6,7 +7,6 @@ import GenreSelect from '../Genre/genreSelect';
 import { genreList } from '../Genre/genreList';
 import SortControl from '../SortControl/sortControl';
 import MovieTile from '../MovieTile/movieTile';
-import MovieDetails from '../MovieDetails/movieDetails';
 import '../MovieForm/movie-form.css';
 import './movie-list-page.css';
 
@@ -14,6 +14,7 @@ const MovieListPage = (props) => {
     const [showAddDialog, setShowAddDialog] = useState(false);
     const [sortCriterion, setSortCriterion] = useState('release_date'); // sort criterion
     const [selectedMovie, setSelectedMovie] = useState({}); // selected movie
+    const [movieId, setMovieId] = useState();
     const [showDetail, setShowDetail] = useState(false);
     const [showEditDialog, setShowEditDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -23,17 +24,47 @@ const MovieListPage = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [movies, setMovies] = useState([]); //movie list
 
+    const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    useEffect(() => {
+        setSearchParams({ sortCriterion, searchQuery, activeGenre });
+    }, [sortCriterion, searchQuery, activeGenre]);
+
+    useEffect(() => {
+        if(movieId) navigate(`/${movieId}`);
+    }, [movieId]);
+
+    useEffect(() => {
+      const params = new URLSearchParams(searchParams);
+      const newSortCriterion = params.get('sortCriterion') || 'release_date';
+      const newSearchQuery = params.get('searchQuery') || searchQuery;
+      const newActiveGenre = params.get('activeGenre') || 'All';
+      setSortCriterion(newSortCriterion);
+      setActiveGenre(newActiveGenre);
+      setSearchQuery(newSearchQuery);
+    }, [searchParams]);
+
     useEffect(() => {
         setIsLoading(true);
-        const query = buildQuery();
-        fetch(`http://localhost:4000/movies?${query}`)
-          .then(response => response.json())
-          .then(data => {
+        if(showDetail && movieId) {
+            fetch(`http://localhost:4000/movies/${movieId}`)
+            .then(response => response.json())
+            .then(data => {
+                setSelectedMovie(data[0]);
+                setIsLoading(false);
+            })
+            .catch(error => console.error(error));
+        }
+
+        fetch(`http://localhost:4000/movies?${buildQuery()}`)
+        .then(response => response.json())
+        .then(data => {
             setMovies(data.data);
             setIsLoading(false);
           })
           .catch(error => console.error(error));
-    }, [searchQuery, sortCriterion, activeGenre]);
+    }, [searchParams, movieId]);
       
     function buildQuery() {
         const queryParts = [];
@@ -59,6 +90,7 @@ const MovieListPage = (props) => {
     const handleTileClick = (movie) => {
         setShowDetail(true);
         setSelectedMovie(movie);
+        setMovieId(movie.id);
     }
 
     const handleAddClick = () => {
@@ -80,15 +112,10 @@ const MovieListPage = (props) => {
 
     return (
         <>
-            {showDetail && selectedMovie ? <MovieDetails movie={selectedMovie}/> : 
-            <>
-                <div className='add-movie-div'>
-                    <button className='add-movie-button' onClick={handleAddClick}>+ Add Movie</button>
-                </div>
-                <div className='movie-list-page'>
-                    <SearchForm initialSearchQuery={searchQuery} onSearch={handleSearchSubmit} />
-                </div>
-            </>}
+            <div className='add-movie-div'>
+                <button className='add-movie-button' onClick={handleAddClick}>+ Add Movie</button>
+            </div>
+            {movieId ? <Outlet /> : <SearchForm initialSearchQuery={searchQuery} onSearch={handleSearchSubmit} setSearchQuery={setSearchQuery}/> }
             <div className='movie-filtering'>
                 <GenreSelect genreList={genreList} activeGenre={activeGenre} setActiveGenre={setActiveGenre} selectGenre={props.selectGenre}/>
                 <SortControl currentSelection={sortCriterion} onSelectionChange={handleSortByChange} />

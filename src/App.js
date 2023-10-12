@@ -1,7 +1,8 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { genreList } from "./components/Genre/genreList";
 import MovieListPage from './components/MovieListPage/movieListPage';
-import './App.css';
+import MovieDetailsWrapper from './components/MovieDetails/movieDetailsWrapper';
 
 const selectGenre = (index) => {
   const existedGenre = genreList.find((element) => element.id === index);
@@ -9,7 +10,16 @@ const selectGenre = (index) => {
 }
 
 function App() {
-  return <MovieListPage selectGenre={selectGenre}/>;
+  
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<MovieListPage selectGenre={selectGenre}/>}>
+          <Route path=":movieId" element={<MovieDetailsWrapper />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App;

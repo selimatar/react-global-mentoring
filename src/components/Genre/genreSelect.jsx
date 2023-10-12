@@ -16,7 +16,6 @@ const GenreSelect = ({ genreList, activeGenre, setActiveGenre, selectGenre }) =>
 
     return (
         <div style={{width: "50%", margin: 40}}>
-            <h3>Genre List Component</h3>
             <div className="tabs">
                 {genreList && genreList.map((genre) => {
                     return <Genre key={genre.id} genre={genre} checkActive={checkActive} handleClick={handleClick}/>
