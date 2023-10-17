@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams, Outlet, useNavigate } from "react-router-dom";
 import SearchForm from '../Search/searchForm';
 import Dialog from '../Dialog/dialog';
-import MovieForm from '../MovieForm/movieForm';
 import GenreSelect from '../Genre/genreSelect';
 import { genreList } from '../Genre/genreList';
 import SortControl from '../SortControl/sortControl';
 import MovieTile from '../MovieTile/movieTile';
+import AddMovieForm from '../MovieForm/addMovieForm';
+import EditMovieForm from '../MovieForm/editMovieForm';
 import '../MovieForm/movie-form.css';
 import './movie-list-page.css';
 
@@ -101,6 +102,11 @@ const MovieListPage = (props) => {
         setEditingMovie(movie);
         setShowEditDialog(true);
     }
+
+    const handleEditClose = () => {
+        setShowEditDialog(false);
+        setEditingMovie(null);
+    }
     
     const handleDeleteClick = () => {
         setShowDeleteDialog(true);
@@ -114,6 +120,9 @@ const MovieListPage = (props) => {
         <>
             <div className='add-movie-div'>
                 <button className='add-movie-button' onClick={handleAddClick}>+ Add Movie</button>
+                {showAddDialog &&
+                    <AddMovieForm onClose={() => setShowAddDialog(false)}/>
+                }
             </div>
             {movieId ? <Outlet /> : <SearchForm initialSearchQuery={searchQuery} onSearch={handleSearchSubmit} setSearchQuery={setSearchQuery}/> }
             <div className='movie-filtering'>
@@ -136,15 +145,8 @@ const MovieListPage = (props) => {
                     ))
                 )}
             </div>
-            {showAddDialog && (
-                <Dialog title="Add Movie" onClose={() => setShowAddDialog(false)}>
-                    <MovieForm />
-                </Dialog>
-            )}
             {showEditDialog && (
-                <Dialog title="Edit Movie" onClose={() => setShowEditDialog(false)}>
-                    <MovieForm initialMovieInfo={editingMovie} />
-                </Dialog>
+                <EditMovieForm selectedMovie={editingMovie} onClose={handleEditClose} />
             )}
             {showDeleteDialog && (
                 <Dialog title="Delete Movie" onClose={() => setShowDeleteDialog(false)}>
