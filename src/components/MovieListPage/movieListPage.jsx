@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams, Outlet, useNavigate } from "react-router-dom";
+import { useSearchParams, useParams, useNavigate, createSearchParams } from "react-router-dom";
 import SearchForm from '../Search/searchForm';
 import Dialog from '../Dialog/dialog';
 import MovieForm from '../MovieForm/movieForm';
@@ -7,14 +7,17 @@ import GenreSelect from '../Genre/genreSelect';
 import { genreList } from '../Genre/genreList';
 import SortControl from '../SortControl/sortControl';
 import MovieTile from '../MovieTile/movieTile';
+import MovieDetailsWrapper from '../MovieDetails/movieDetailsWrapper';
 import '../MovieForm/movie-form.css';
 import './movie-list-page.css';
 
 const MovieListPage = () => {
+    const { movieId: movieIdParam } = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
+    const navigate = useNavigate();
     const [showAddDialog, setShowAddDialog] = useState(false);
     const [sortCriterion, setSortCriterion] = useState(searchParams.get('sortCriterion') || 'release_date');
-    const [movieId, setMovieId] = useState();
+    const [movieId, setMovieId] = useState(movieIdParam);
     const [showEditDialog, setShowEditDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [editingMovie, setEditingMovie] = useState(null);
@@ -23,15 +26,10 @@ const MovieListPage = () => {
     const [activeGenre, setActiveGenre] = useState(genreList.find(genre => genre.name === searchParams.get('activeGenre')) ?? genreList[0]);
     const [isLoading, setIsLoading] = useState(false);
     const [movies, setMovies] = useState([]);
-    const navigate = useNavigate();
 
     useEffect(() => {
         setSearchParams({ sortCriterion, searchQuery, activeGenre: activeGenre.name });
     }, [sortCriterion, searchQuery, activeGenre]);
-
-    useEffect(() => {
-        if(movieId) navigate(`/${movieId}`);
-    }, [movieId]);
 
     useEffect(() => {
         setIsLoading(true);
@@ -41,8 +39,8 @@ const MovieListPage = () => {
         .then(res => {
             setMovies(res.data);
             setIsLoading(false);
-          })
-          .catch(error => console.error(error));
+        })
+        .catch(error => console.error(error));
     }, [searchParams, movieId]);
       
     function buildQuery() {
@@ -67,7 +65,12 @@ const MovieListPage = () => {
     };
 
     const handleTileClick = (movie) => {
+        const params = { sortCriterion: sortCriterion, searchQuery: searchQuery, activeGenre: activeGenre };
         setMovieId(movie.id);
+        navigate({
+            pathname:`/${movie.id}`,
+            search: `?${createSearchParams(params)}`,
+        });
     }
 
     const handleAddClick = () => {
@@ -92,7 +95,7 @@ const MovieListPage = () => {
             <div className='add-movie-div'>
                 <button className='add-movie-button' onClick={handleAddClick}>+ Add Movie</button>
             </div>
-            {movieId ? <Outlet /> : <SearchForm initialQuery={searchQuery} onSearch={handleSearchSubmit} /> }
+            {movieId ? <MovieDetailsWrapper /> : <SearchForm initialQuery={searchQuery} onSearch={handleSearchSubmit} /> }
             <div className='movie-filtering'>
                 <GenreSelect genreList={genreList} activeGenre={activeGenre} setActiveGenre={setActiveGenre} />
                 <SortControl currentSelection={sortCriterion} onSelectionChange={handleSortByChange} />
