@@ -73,7 +73,7 @@
     position: absolute;
 }
 
-.movie-tile-context-menu-button {
+.movie-context-menu-button {
     background-color: #232323;
     color: #ffff;
     width: 36px;
@@ -98,7 +98,8 @@
     margin-left: 220px;
 }
 
-.context-menu-button {
+.context-menu-edit-button,
+.context-menu-delete-button {
     background-color: #232323;
 
     height: 37px;
@@ -117,7 +118,8 @@
     text-align: center;
 }
 
-.context-menu-button:hover {
+.context-menu-edit-button:hover,
+.context-menu-delete-button:hover {
     background-color:#F65261;
     transition: 0.7s;
 }

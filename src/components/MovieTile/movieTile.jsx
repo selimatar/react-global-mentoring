@@ -45,11 +45,11 @@ const MovieTile = ({ movieInfo, onClick, onEdit, onDelete }) => {
         <div className="movie-tile" title="movieTitle">
           <div className="movie-actions-container">
             <div className="movie-tile-actions">
-              <button className="movie-tile-context-menu-button" onClick={handleContextMenu} ref={dialogRef}>...</button>
+              <button className="movie-context-menu-button" onClick={handleContextMenu} ref={dialogRef}>...</button>
               {showContextMenu && (
                 <div className="context-menu" onBlur={handleContextMenuClose}>
-                  <button className="context-menu-button" onClick={handleEditClick}>Edit</button>
-                  <button className="context-menu-button" onClick={handleDeleteClick}>Delete</button>
+                  <button className="context-menu-edit-button" onClick={handleEditClick}>Edit</button>
+                  <button className="context-menu-delete-button" onClick={handleDeleteClick}>Delete</button>
                 </div>
               )}
             </div>
