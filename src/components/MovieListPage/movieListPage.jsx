@@ -4,12 +4,18 @@ import SearchForm from '../Search/searchForm';
 import Dialog from '../Dialog/dialog';
 import MovieForm from '../MovieForm/movieForm';
 import GenreSelect from '../Genre/genreSelect';
-import { genreList } from '../Genre/genreList';
 import SortControl from '../SortControl/sortControl';
 import MovieTile from '../MovieTile/movieTile';
 import MovieDetailsWrapper from '../MovieDetails/movieDetailsWrapper';
 import '../MovieForm/movie-form.css';
 import './movie-list-page.css';
+
+const genreList = [
+    { name: "All", id: 1 }, 
+    { name: "Documentary", id: 2 }, 
+    { name: "Comedy", id: 3 }, 
+    { name: "Horror", id: 4 }
+];
 
 const MovieListPage = () => {
     const { movieId: movieIdParam } = useParams();
@@ -22,7 +28,6 @@ const MovieListPage = () => {
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [editingMovie, setEditingMovie] = useState(null);
     const [searchQuery, setSearchQuery] = useState(searchParams.get('searchQuery') || '');
-    //can't access the genre list when genre has changed, this activeGenre state will be checked
     const [activeGenre, setActiveGenre] = useState(genreList.find(genre => genre.name === searchParams.get('activeGenre')) ?? genreList[0]);
     const [isLoading, setIsLoading] = useState(false);
     const [movies, setMovies] = useState([]);

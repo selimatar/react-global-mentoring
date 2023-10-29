@@ -5,7 +5,7 @@ const Genre = (props) => {
     return (
         <button
             className={`tab ${props.checkActive(props.genre.id, "active")}`}
-            onClick={() => props.handleClick(props.genre.id)}
+            onClick={() => props.handleChangeGenre(props.genre)}
         >
             {props.genre.name}
       </button>

@@ -19,6 +19,14 @@ describe('Movie List Page', () => {
       cy.get('select').select('title');
       cy.get('select').should('have.value', 'title');
     });
+
+    it('should change the sorting criteria', () => {
+      cy.visit('http://localhost:3000');
+      cy.get('.release-date').should('have.value', 'release_date');
+
+      cy.get('#sort-by-select').select('Title');
+      cy.get('.release-date').should('have.value', 'title');
+    });
   });
 
   describe('GenreSelect', () => {
@@ -33,25 +41,38 @@ describe('Movie List Page', () => {
       cy.get('.tabs').should('exist');
       cy.get('.panels').should('exist');
     });
-  
-    it('should display genre tabs', () => {
-      cy.get('.tab').should('have.length', genreList.length);
-  
-      genreList.forEach((genre, index) => {
-        cy.get('.tab').eq(index).should('contain', genre.name);
+
+    describe('Genre tabs', () => {
+      it('should display genre tabs', () => {
+        cy.get('.tab').should('have.length', genreList.length);
+    
+        genreList.forEach((genre, index) => {
+          cy.get('.tab').eq(index).should('contain', genre.name);
+        });
+      });
+    
+      it('should mark the active genre tab as active', () => {
+        cy.get('.tab').eq(0).click();
+        cy.get('.tab.active').should('contain', genreList[0].name);
+      });
+    
+      it('should display the active genre name in the panel', () => {
+        cy.get('.tab').eq(1).click();
+        cy.get('.panel.active p').should('contain', genreList[1].name);
       });
     });
-  
-    //these are commented because of the changing structre of the genreSelect component
-    // it('should mark the active genre tab as active', () => {
-    //   cy.get('.tab').eq(0).click();
-    //   cy.get('.tab.active').should('contain', genreList[0].name);
-    // });
-  
-    // it('should display the active genre name in the panel', () => {
-    //   cy.get('.tab').eq(1).click();
-    //   cy.get('.panel.active p').should('contain', genreList[1].name);
-    // });
+
+    describe('Changing Genre Selection', () => {
+      it('should change the active genre when a different genre is selected', () => {
+        cy.visit('http://localhost:3000');
+    
+        cy.get('.panel').should('contain', 'All');
+
+        cy.contains('Horror').click();
+        cy.get('.panel').should('contain', 'Horror');
+      });
+    });
+
   });
   
   describe('Roting cases', () => {
