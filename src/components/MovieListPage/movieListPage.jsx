@@ -48,24 +48,18 @@ const MovieListPage = (props) => {
 
     useEffect(() => {
         setIsLoading(true);
-        if(showDetail && movieId) {
-            fetch(`http://localhost:4000/movies/${movieId}`)
-            .then(response => response.json())
-            .then(data => {
-                setSelectedMovie(data[0]);
-                setIsLoading(false);
-            })
-            .catch(error => console.error(error));
-        }
+        fetchMovies();
+    }, [searchParams]);
 
+    const fetchMovies = () => {
         fetch(`http://localhost:4000/movies?${buildQuery()}`)
         .then(response => response.json())
         .then(data => {
             setMovies(data.data);
             setIsLoading(false);
-          })
-          .catch(error => console.error(error));
-    }, [searchParams, movieId]);
+        })
+        .catch(error => console.error(error));
+    }
       
     function buildQuery() {
         const queryParts = [];
@@ -106,6 +100,7 @@ const MovieListPage = (props) => {
     const handleEditClose = () => {
         setShowEditDialog(false);
         setEditingMovie(null);
+        fetchMovies();
     }
     
     const handleDeleteClick = () => {

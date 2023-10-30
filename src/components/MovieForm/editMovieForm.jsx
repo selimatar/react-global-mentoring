@@ -20,6 +20,8 @@ const EditMovieForm = ({ onClose, selectedMovie }) => {
       .then(response => {
         if (response.ok) {
           setSuccessMessage('Movie data has been updated successfully!');
+          onClose();
+          navigate('/');
         } else {
           throw new Error('Failed to update movie data.');
         }

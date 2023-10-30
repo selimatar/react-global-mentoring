@@ -8,7 +8,6 @@ const AddMovieForm = ({onClose}) => {
   const navigate = useNavigate();
 
   const handleSubmit = (movieData) => {
-    movieData.id = Date.now();
     fetch(`http://localhost:4000/movies`, {
       method: 'POST',
       headers: {
@@ -20,6 +19,8 @@ const AddMovieForm = ({onClose}) => {
     .then((response) => {
       if (response.ok) {
         setSuccessMessage('Movie has been added successfully!');
+        onClose();
+        navigate('/');
       } else {
         console.log('Error adding movie');
       }

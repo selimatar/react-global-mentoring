@@ -33,7 +33,8 @@ const MovieForm = ({ initialMovieInfo = {}, onSubmit, successMessage }) => {
         revenue: initialMovieInfo.revenue ?? 0,
         genres: initialMovieInfo.genres ?? [],
         runtime: initialMovieInfo.runtime ?? 0,
-        vote_average: initialMovieInfo.vote_average ?? 0
+        vote_average: initialMovieInfo.vote_average ?? 0,
+        ...(initialMovieInfo.id ? { id: initialMovieInfo.id } : {})
       }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
