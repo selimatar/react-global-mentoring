@@ -44,6 +44,8 @@ const MovieTile = ({ movieInfo, onClick, onEdit, onDelete }) => {
       <>
         <div className="movie-tile" title="movieTitle">
           <div className="movie-actions-container">
+          <div className="movie-image-container">
+            <img className="movie-image" onClick={() => {onClick(movieInfo)}} src={movieInfo.poster_path} alt={movieInfo.title} />
             <div className="movie-tile-actions">
               <button className="movie-context-menu-button" onClick={handleContextMenu} ref={dialogRef}>...</button>
               {showContextMenu && (

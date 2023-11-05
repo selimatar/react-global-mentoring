@@ -15,7 +15,7 @@ const SearchForm = ({ initialQuery, onSearch }) => {
   };
 
   return (
-    <div style={{margin: "40px"}}>
+    <div className="search-form" style={{margin: "40px"}}>
       <input
         className="search-input"
         type="text"

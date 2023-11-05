@@ -1,18 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { genreList } from "./components/Genre/genreList";
 import MovieListPage from './components/MovieListPage/movieListPage';
 import MovieDetailsWrapper from './components/MovieDetails/movieDetailsWrapper';
 import AddMovieForm from './components/MovieForm/addMovieForm';
 import EditMovieForm from './components/MovieForm/editMovieForm';
 
-const selectGenre = (index) => {
-  const existedGenre = genreList.find((element) => element.id === index);
-  return existedGenre;
-}
-
 function App() {
-  
   return (
     <BrowserRouter>
       <Routes>
@@ -23,6 +16,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+
   )
 }
 
