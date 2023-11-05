@@ -1,15 +1,19 @@
 import React from 'react';
-import { genreList } from "./components/Genre/genreList";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MovieListPage from './components/MovieListPage/movieListPage';
-import './App.css';
-
-const selectGenre = (index) => {
-  const existedGenre = genreList.find((element) => element.id === index);
-  return existedGenre;
-}
+import MovieDetailsWrapper from './components/MovieDetails/movieDetailsWrapper';
 
 function App() {
-  return <MovieListPage selectGenre={selectGenre}/>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<MovieListPage />}>
+          <Route path=':movieId' element={<MovieDetailsWrapper />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+
+  )
 }
 
 export default App;

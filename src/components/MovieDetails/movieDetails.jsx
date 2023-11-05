@@ -7,7 +7,6 @@ const MovieDetails = (props) => {
   return (
     <>
       <div style={{ margin: 40 }}>
-        <h2>Movie Details Component</h2>
         <div className="movie-details" title="movie-details">
           <div className="movie-image">
             <img style={{height: "400px"}} alt={props.movie.title} src={props.movie.poster_path} />
