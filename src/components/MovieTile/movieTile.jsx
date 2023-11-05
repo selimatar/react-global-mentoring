@@ -41,33 +41,31 @@ const MovieTile = ({ movieInfo, onClick, onEdit, onDelete }) => {
   };
 
   return (
-      <>
-        <div className="movie-tile" title="movieTitle">
-          <div className="movie-actions-container">
-          <div className="movie-image-container">
-            <img className="movie-image" onClick={() => {onClick(movieInfo)}} src={movieInfo.poster_path} alt={movieInfo.title} />
-            <div className="movie-tile-actions">
-              <button className="movie-context-menu-button" onClick={handleContextMenu} ref={dialogRef}>...</button>
-              {showContextMenu && (
-                <div className="context-menu" onBlur={handleContextMenuClose}>
-                  <button className="context-menu-edit-button" onClick={handleEditClick}>Edit</button>
-                  <button className="context-menu-delete-button" onClick={handleDeleteClick}>Delete</button>
-                </div>
-              )}
-            </div>
-            <div className="movie-image-container">
-              <img className="movie-image" onClick={onClick} src={movieInfo.poster_path} alt={movieInfo.title} />
-            </div>
-          </div>
-          <div className="movie-tile-details">
-            <div className="movie-name-and-year">
-              <h2 className="movie-name">{movieInfo.title}</h2>
-              <p className="movie-year">{movieInfo.release_date.substring(0, 4)}</p>
-            </div>
-            <p className="movie-genres">{movieInfo.genres.join(', ')}</p>
+    <>
+      <div className="movie-tile" title="movieTitle">
+        <div className="movie-actions-container">
+        <div className="movie-tile-actions">
+            <button className="movie-context-menu-button" onClick={handleContextMenu} ref={dialogRef}>...</button>
+            {showContextMenu && (
+              <div className="context-menu" onBlur={handleContextMenuClose}>
+                <button className="context-menu-edit-button" onClick={handleEditClick}>Edit</button>
+                <button className="context-menu-delete-button" onClick={handleDeleteClick}>Delete</button>
+              </div>
+            )}
           </div>
         </div>
-      </>
+        <div className="movie-image-container">
+          <img className="movie-image" onClick={() => {onClick(movieInfo)}} src={movieInfo.poster_path} alt={movieInfo.title} />
+        </div>
+        <div className="movie-tile-details">
+          <div className="movie-name-and-year">
+            <h2 className="movie-name">{movieInfo.title}</h2>
+            <p className="movie-year">{movieInfo.release_date.substring(0, 4)}</p>
+          </div>
+          <p className="movie-genres">{movieInfo.genres.join(', ')}</p>
+        </div>
+      </div>
+    </>
   );
 };
 

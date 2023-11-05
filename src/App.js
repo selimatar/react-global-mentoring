@@ -9,14 +9,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<MovieListPage selectGenre={selectGenre}/>}>
+        <Route path='/' element={<MovieListPage />}>
           <Route path=":movieId" element={<MovieDetailsWrapper />} />
           <Route path="/new" element={<AddMovieForm />} />
           <Route path=":movieId/edit" element={<EditMovieForm />} />
         </Route>
       </Routes>
     </BrowserRouter>
-
   )
 }
 

@@ -35,7 +35,7 @@ const MovieListPage = () => {
 
     useEffect(() => {
         setSearchParams({ sortCriterion, searchQuery, activeGenre: activeGenre.name });
-    }, [sortCriterion, searchQuery, activeGenre]);
+    }, [sortCriterion, searchQuery, activeGenre, movieId]);
 
     useEffect(() => {
         setIsLoading(true);
@@ -50,7 +50,7 @@ const MovieListPage = () => {
             setIsLoading(false);
         })
         .catch(error => console.error(error));
-    }, [searchParams, movieId]);
+    };
       
     function buildQuery() {
         const queryParts = [];
