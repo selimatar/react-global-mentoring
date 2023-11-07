@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useSearchParams, useParams, useNavigate, createSearchParams } from "react-router-dom";
+import React, { useState } from 'react';
+import { useParams } from "react-router-dom";
 import SearchForm from '../Search/searchForm';
 import Dialog from '../Dialog/dialog';
 import GenreSelect from '../Genre/genreSelect';
@@ -8,8 +8,8 @@ import MovieTile from '../MovieTile/movieTile';
 import AddMovieForm from '../MovieForm/addMovieForm';
 import EditMovieForm from '../MovieForm/editMovieForm';
 import MovieDetailsWrapper from '../MovieDetails/movieDetailsWrapper';
-import '../MovieForm/movie-form.css';
-import './movie-list-page.css';
+import '../MovieForm/movie-form.module.css';
+import movieListPageStyles from './movie-list-page.module.css';
 
 const genreList = [
     { name: "All", id: 1 }, 
@@ -18,53 +18,53 @@ const genreList = [
     { name: "Horror", id: 4 }
 ];
 
-const MovieListPage = () => {
+export async function getServerSideProps(context) {
+    const { contextQuery } = context;
+    const sortCriterion = contextQuery.sortCriterion || 'release_date';
+    const searchQuery = contextQuery.search || '';
+    const activeGenre = contextQuery.filter || genreList[0];
+
+    const query = searchQuery;
+    const sortBy = sortCriterion;
+    const genre = activeGenre;
+  
+    const res = await fetch(`http://localhost:4000/movies?${buildQuery(query, sortBy, genre)}`);
+    const moviesData = await res.json();
+  
+    return {
+      props: {
+        sortBy: sortCriterion,
+        query: searchQuery,
+        genre: activeGenre,
+        initialMovies: moviesData,
+      },
+    };
+}
+
+function buildQuery(query, sortBy, genre) {
+    const queryParts = [];
+    if (query && query !== '') {
+        queryParts.push(`search=${query}&searchBy=title`);
+    }
+    if (sortBy) {
+        queryParts.push(`sortBy=${sortBy}&sortOrder=desc`);
+    }
+    if (genre.name !== 'All') {
+        queryParts.push(`filter=${genre.name}`);
+    }
+    return queryParts.join('&');
+}
+
+const MovieListPage = ({sortBy, query, genre, initialMovies}) => {
     const { movieId: movieIdParam } = useParams();
-    const [searchParams, setSearchParams] = useSearchParams();
-    const navigate = useNavigate();
     const [showAddDialog, setShowAddDialog] = useState(false);
-    const [sortCriterion, setSortCriterion] = useState(searchParams.get('sortCriterion') || 'release_date');
+    const [editingMovie, setEditingMovie] = useState(null);
     const [movieId, setMovieId] = useState(movieIdParam);
     const [showEditDialog, setShowEditDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-    const [editingMovie, setEditingMovie] = useState(null);
-    const [searchQuery, setSearchQuery] = useState(searchParams.get('searchQuery') || '');
-    const [activeGenre, setActiveGenre] = useState(genreList.find(genre => genre.name === searchParams.get('activeGenre')) ?? genreList[0]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [movies, setMovies] = useState([]);
-
-    useEffect(() => {
-        setSearchParams({ sortCriterion, searchQuery, activeGenre: activeGenre.name });
-    }, [sortCriterion, searchQuery, activeGenre, movieId]);
-
-    useEffect(() => {
-        setIsLoading(true);
-        fetchMovies();
-    }, [searchParams]);
-
-    const fetchMovies = () => {
-        fetch(`http://localhost:4000/movies?${buildQuery()}`)
-        .then(response => response.json())
-        .then(res => {
-            setMovies(res.data);
-            setIsLoading(false);
-        })
-        .catch(error => console.error(error));
-    };
-      
-    function buildQuery() {
-        const queryParts = [];
-        if (searchQuery && searchQuery !== '') {
-            queryParts.push(`${'search'}=${searchQuery}&searchBy=title`);
-        }
-        if (sortCriterion) {
-            queryParts.push(`${'sortBy'}=${sortCriterion}&sortOrder=desc`);
-        }
-        if (activeGenre.name !== 'All') {
-            queryParts.push(`${'filter'}=${activeGenre.name}`);
-        }
-        return queryParts.join('&');
-    }
+    const [sortCriterion, setSortCriterion] = useState(sortBy || 'release_date');
+    const [searchQuery, setSearchQuery] = useState(query || '');
+    const [activeGenre, setActiveGenre] = useState(genreList.find(genreItem => genreItem.name === genre) ?? genreList[0]);
 
     const handleSearchSubmit = (value) => {
         return event => {
@@ -107,23 +107,23 @@ const MovieListPage = () => {
 
     return (
         <>
-            <div className='add-movie-div'>
-                <button className='add-movie-button' onClick={handleAddClick}>+ Add Movie</button>
+            <div className={movieListPageStyles.addMovieDiv}>
+                <button className={movieListPageStyles.addMovieButton} onClick={handleAddClick}>+ Add Movie</button>
                 {showAddDialog &&
                     <AddMovieForm onClose={() => setShowAddDialog(false)}/>
                 }
             </div>
             {movieId ? <MovieDetailsWrapper /> : <SearchForm initialQuery={searchQuery} onSearch={handleSearchSubmit} /> }
-            <div className='movie-filtering'>
+            <div className={movieListPageStyles.movieFiltering}>
                 <GenreSelect genreList={genreList} activeGenre={activeGenre} setActiveGenre={setActiveGenre} />
                 <SortControl currentSelection={sortCriterion} onSelectionChange={handleSortByChange} />
             </div>
-            <p style={{marginLeft: "40px"}}>{movies.length > 0 ? (movies.length + " movies found") : "No movies found"}</p>
-            <div className='movie-list-container'>
-                {isLoading ? (
-                    <p>Loading...</p>
-                ) : (
-                    movies.map((movie) => (
+            <p style={{ marginLeft: "40px" }}>
+                {initialMovies && initialMovies.length > 0 ? initialMovies.length + " movies found" : "No movies found"}
+            </p>
+            <div className={movieListPageStyles.movieListContainer}>
+                {
+                    initialMovies?.map((movie) => (
                         <MovieTile
                             key={movie.title}
                             movieInfo={movie}
@@ -132,7 +132,7 @@ const MovieListPage = () => {
                             onDelete={() => handleDeleteClick(movie)}
                         />
                     ))
-                )}
+                }
             </div>
             {showEditDialog && (
                 <EditMovieForm selectedMovie={editingMovie} onClose={handleEditClose} />

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import './movieTile.css';
+import './movieTile.module.css';
 
 const MovieTile = ({ movieInfo, onClick, onEdit, onDelete }) => {
   const [showContextMenu, setShowContextMenu] = useState(false);

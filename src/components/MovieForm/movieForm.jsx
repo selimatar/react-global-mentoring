@@ -1,5 +1,5 @@
 import React from 'react';
-import './movie-form.css';
+import './movie-form.module.css';
 import { Formik, Field, Form } from 'formik';
 import { object, string, array, date, number } from 'yup';
 
@@ -40,7 +40,7 @@ const MovieForm = ({ initialMovieInfo = {}, onSubmit, successMessage }) => {
       onSubmit={handleSubmit}
     >
       {({ errors, touched, setFieldValue }) => (
-        <Form>
+        <Form className='movie-form'>
           {successMessage && <div className="success-message">{successMessage}</div>}
           <div className="form-row">
             <div className="form-col">

@@ -1,5 +1,5 @@
 import React from 'react';
-import './sortControl.css';
+import styles from './sortControl.module.css';
 
 const SortControl = ({ currentSelection, onSelectionChange }) => {
   const handleSelectionChange = (event) => {
@@ -7,9 +7,9 @@ const SortControl = ({ currentSelection, onSelectionChange }) => {
   };
 
   return (
-    <div className="sort-control" role="form">
-      <label className="sort-by-select" htmlFor="sort-by-select">Sort by:</label>
-      <select className="release-date" id="sort-by-select" value={currentSelection} onChange={handleSelectionChange}>
+    <div className={styles.sortControl} role="form">
+      <label className={styles.sortBySelect} htmlFor="sort-by-select">Sort by:</label>
+      <select className={styles.releaseDate} id="sort-by-select" value={currentSelection} onChange={handleSelectionChange}>
         <option value="release_date">Release Date</option>
         <option value="title">Title</option>
       </select>

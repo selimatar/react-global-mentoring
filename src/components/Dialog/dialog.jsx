@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Portal } from 'react-portal';
 
-import './dialog.css';
+import './dialog.module.css';
 
 const Dialog = ({ title, onClose, children }) => {
   const dialogRef = useRef(null);
@@ -30,14 +30,16 @@ const Dialog = ({ title, onClose, children }) => {
 
   return (
     <Portal>
-      <div className="dialog">
-        <div className="dialog-overlay" onClick={onClose} />
-        <div className="dialog-content" ref={dialogRef}>
-          <div className="dialog-header">
-            <h2>{title}</h2>
-            <button onClick={onClose}>×</button>
+      <div className={styles.dialogContainer}>
+        <div className="dialog">
+          <div className="dialog-overlay" onClick={onClose} />
+          <div className="dialog-content" ref={dialogRef}>
+            <div className="dialog-header">
+              <h2>{title}</h2>
+              <button onClick={onClose}>×</button>
+            </div>
+            <div className="dialog-body">{children}</div>
           </div>
-          <div className="dialog-body">{children}</div>
         </div>
       </div>
     </Portal>
