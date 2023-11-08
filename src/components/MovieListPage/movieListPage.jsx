@@ -18,43 +18,6 @@ const genreList = [
     { name: "Horror", id: 4 }
 ];
 
-export async function getServerSideProps(context) {
-    const { contextQuery } = context;
-    const sortCriterion = contextQuery.sortCriterion || 'release_date';
-    const searchQuery = contextQuery.search || '';
-    const activeGenre = contextQuery.filter || genreList[0];
-
-    const query = searchQuery;
-    const sortBy = sortCriterion;
-    const genre = activeGenre;
-  
-    const res = await fetch(`http://localhost:4000/movies?${buildQuery(query, sortBy, genre)}`);
-    const moviesData = await res.json();
-  
-    return {
-      props: {
-        sortBy: sortCriterion,
-        query: searchQuery,
-        genre: activeGenre,
-        initialMovies: moviesData,
-      },
-    };
-}
-
-function buildQuery(query, sortBy, genre) {
-    const queryParts = [];
-    if (query && query !== '') {
-        queryParts.push(`search=${query}&searchBy=title`);
-    }
-    if (sortBy) {
-        queryParts.push(`sortBy=${sortBy}&sortOrder=desc`);
-    }
-    if (genre.name !== 'All') {
-        queryParts.push(`filter=${genre.name}`);
-    }
-    return queryParts.join('&');
-}
-
 const MovieListPage = ({sortBy, query, genre, initialMovies}) => {
     const { movieId: movieIdParam } = useParams();
     const [showAddDialog, setShowAddDialog] = useState(false);
@@ -62,8 +25,8 @@ const MovieListPage = ({sortBy, query, genre, initialMovies}) => {
     const [movieId, setMovieId] = useState(movieIdParam);
     const [showEditDialog, setShowEditDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-    const [sortCriterion, setSortCriterion] = useState(sortBy || 'release_date');
-    const [searchQuery, setSearchQuery] = useState(query || '');
+    const [sortCriterion, setSortCriterion] = useState(sortBy);
+    const [searchQuery, setSearchQuery] = useState(query);
     const [activeGenre, setActiveGenre] = useState(genreList.find(genreItem => genreItem.name === genre) ?? genreList[0]);
 
     const handleSearchSubmit = (value) => {

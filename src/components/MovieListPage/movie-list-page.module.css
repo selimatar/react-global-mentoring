@@ -26,7 +26,7 @@
     flex-direction: row;
 }
 
-.movie-list-container {
+.movieListContainer {
     display: flex;
     flex-wrap: wrap;
     margin-left: 30px;
