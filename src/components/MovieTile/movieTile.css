@@ -1,10 +1,9 @@
 .movie-tile {
-    width: '319px';
-    height: '507px';
-    border: '1px solid black';
-    border-radius: '5px';
-    overflow: 'hidden';
-    margin: 40px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 .movie-tile-details {
@@ -34,16 +33,14 @@
 
 .movie-image {
     width: '100%';
-    height: '100px';
     height: 400px;
-    object-fit: 'cover';
 }
 
 .movie-year {
-    box-sizing: border-box;
-    width: 66px;
-    height: 26px;
-    opacity: 0.5;
+    width: auto;
+    height: auto;
+    padding: 5px;
+    opacity: 0.6;
     border: 1px solid #979797;
     border-radius: 5px;
     text-align: center;
@@ -66,7 +63,7 @@
     position: absolute;
 }
 
-.movie-tile-context-menu-button {
+.movie-context-menu-button {
     background-color: #232323;
     color: #ffff;
     width: 36px;
@@ -90,7 +87,8 @@
     margin-left: 220px;
 }
 
-.context-menu-button {
+.context-menu-edit-button,
+.context-menu-delete-button {
     background-color: #232323;
 
     height: 37px;
@@ -109,7 +107,8 @@
     text-align: center;
 }
 
-.context-menu-button:hover {
+.context-menu-edit-button:hover,
+.context-menu-delete-button:hover {
     background-color:#F65261;
     transition: 0.7s;
 }
