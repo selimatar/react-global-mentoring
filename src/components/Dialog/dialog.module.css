@@ -9,7 +9,7 @@
   align-items: center;
 }
 
-.dialog-overlay {
+.dialogOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -19,7 +19,7 @@
   z-index: 1;
 }
 
-.dialog-content {
+.dialogContent {
   position: relative;
   z-index: 2;
   width: 100%;
@@ -30,7 +30,7 @@
   overflow: hidden;
 }
 
-.dialog-header {
+.dialogHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -39,17 +39,17 @@
   border-bottom: 1px solid #ddd;
 }
 
-.dialog-header h2 {
+.dialogHeader h2 {
   margin: 0;
 }
 
-.dialog-header button {
+.dialogHeader button {
   border: none;
   background: none;
   font-size: 1.5rem;
   cursor: pointer;
 }
 
-.dialog-body {
+.dialogBody {
   padding: 10px;
 }
