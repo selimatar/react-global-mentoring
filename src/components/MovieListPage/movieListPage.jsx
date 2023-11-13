@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from "react-router-dom";
+import { useRouter } from 'next/router';
 import SearchForm from '../Search/searchForm';
 import Dialog from '../Dialog/dialog';
 import GenreSelect from '../Genre/genreSelect';
@@ -19,7 +19,8 @@ const genreList = [
 ];
 
 const MovieListPage = ({sortBy, query, genre, initialMovies}) => {
-    const { movieId: movieIdParam } = useParams();
+    const router = useRouter();
+    const { movieIdParam } = router.query;
     const [showAddDialog, setShowAddDialog] = useState(false);
     const [editingMovie, setEditingMovie] = useState(null);
     const [movieId, setMovieId] = useState(movieIdParam);
@@ -39,10 +40,12 @@ const MovieListPage = ({sortBy, query, genre, initialMovies}) => {
     const handleTileClick = (movie) => {
         const params = { sortCriterion: sortCriterion, searchQuery: searchQuery, activeGenre: activeGenre };
         setMovieId(movie.id);
-        navigate({
-            pathname:`/${movie.id}`,
-            search: `?${createSearchParams(params)}`,
-        });
+        // navigate({
+        //     pathname:`/${movie.id}`,
+        //     search: `?${createSearchParams(params)}`,
+        // });
+
+        router.push(`/${movie.id}`)
     }
 
     const handleAddClick = () => {
