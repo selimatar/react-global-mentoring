@@ -13,7 +13,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const movieIds = getAllMovieIds(); 
+  const movieIds = await getAllMovieIds();
 
   const paths = movieIds.map((movieId) => ({
     params: { movieId: movieId.params.movieId },
@@ -25,8 +25,8 @@ export async function getStaticPaths() {
   };
 }
 
-export default function Movie({ movieData }) {
+export default function Movie({ movieId }) {
   return ( 
-    <p>{movieData}</p>
+    <MovieListPage selectedMovieId={movieId}/>
   );
 }

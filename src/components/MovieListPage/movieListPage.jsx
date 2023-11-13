@@ -18,12 +18,12 @@ const genreList = [
     { name: "Horror", id: 4 }
 ];
 
-const MovieListPage = ({sortBy, query, genre, initialMovies}) => {
+const MovieListPage = ({sortBy, query, genre, initialMovies, selectedMovieId}) => {
     const router = useRouter();
     const { movieIdParam } = router.query;
     const [showAddDialog, setShowAddDialog] = useState(false);
     const [editingMovie, setEditingMovie] = useState(null);
-    const [movieId, setMovieId] = useState(movieIdParam);
+    const [movieId, setMovieId] = useState(movieIdParam ?? selectedMovieId);
     const [showEditDialog, setShowEditDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [sortCriterion, setSortCriterion] = useState(sortBy);
@@ -39,13 +39,12 @@ const MovieListPage = ({sortBy, query, genre, initialMovies}) => {
 
     const handleTileClick = (movie) => {
         const params = { sortCriterion: sortCriterion, searchQuery: searchQuery, activeGenre: activeGenre };
-        setMovieId(movie.id);
-        // navigate({
-        //     pathname:`/${movie.id}`,
-        //     search: `?${createSearchParams(params)}`,
+        // router.push({
+        //     pathname: `/${movie.id}`,
+        //     query: params,
         // });
-
-        router.push(`/${movie.id}`)
+        setMovieId(movie.id);
+        router.push(`/${movie.id}`);
     }
 
     const handleAddClick = () => {
@@ -79,7 +78,7 @@ const MovieListPage = ({sortBy, query, genre, initialMovies}) => {
                     <AddMovieForm onClose={() => setShowAddDialog(false)}/>
                 }
             </div>
-            {movieId ? <MovieDetailsWrapper /> : <SearchForm initialQuery={searchQuery} onSearch={handleSearchSubmit} /> }
+            {movieId ? <MovieDetailsWrapper movieId={movieId} /> : <SearchForm initialQuery={searchQuery} onSearch={handleSearchSubmit} /> }
             <div className={movieListPageStyles.movieFiltering}>
                 <GenreSelect genreList={genreList} activeGenre={activeGenre} setActiveGenre={setActiveGenre} />
                 <SortControl currentSelection={sortCriterion} onSelectionChange={handleSortByChange} />

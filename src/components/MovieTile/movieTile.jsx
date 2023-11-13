@@ -53,7 +53,14 @@ const MovieTile = ({ movieInfo, onClick, onEdit, onDelete }) => {
           </div>
         </div>
         <div className={styles.movieImageContainer}>
-          <img className={styles.movieImage} onClick={() => {onClick(movieInfo)}} src={movieInfo.poster_path} alt={movieInfo.title} />
+          <img className={styles.movieImage} 
+            onClick={(event) => {
+              event.preventDefault();
+              onClick(movieInfo);
+            }} 
+            src={movieInfo.poster_path} 
+            alt={movieInfo.title} 
+          />
         </div>
         <div className={styles.movieTileDetails}>
           <div className={styles.movieNameAndYear}>
