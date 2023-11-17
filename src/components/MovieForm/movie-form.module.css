@@ -1,4 +1,4 @@
-.movie-form {
+.movieForm {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -6,27 +6,20 @@
     margin: 0 auto;
 }
 
-.form-row {
+.formRow {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 1rem;
 }
 
-.form-col {
+.formCol {
     flex-basis: 50%;
     margin-bottom: 1rem;
     padding-right: 1rem;
     box-sizing: border-box;
 }
 
-.form-col {
-    flex-basis: 50%;
-    margin-bottom: 1rem;
-    padding-right: 1rem;
-    box-sizing: border-box;
-}
-
-.item-title {
+.itemTitle {
     height: 20px;
     left: 6.15%;
     right: 88.83%;
@@ -58,12 +51,12 @@
     background: rgb(50 50 50 / 19%);
 }
 
-.movie-title-input,
-.movie-url-input,
-.movie-release-date-input,
-.movie-rating-input,
-.movie-genres-input,
-.movie-runtime-input {
+.movieTitleInput,
+.movieUrlInput,
+.movieReleaseDateInput,
+.movieRatingInput,
+.movieGenresInput,
+.movieRuntimeInput {
     left: 6.15%;
     right: 40.06%;
     top: 19.96%;
@@ -78,7 +71,7 @@
     border-radius: 4px;
 }
 
-.movie-overview-input {
+.movieOverviewInput {
     left: 5.84%;
     right: 6.15%;
     top: 59.21%;
@@ -91,19 +84,19 @@
     border-radius: 4px;
 }
 
-.movie-title-input,
-.movie-url-input,
-.movie-release-date-input,
-.movie-rating-input,
-.movie-runtime-input,
-.movie-genres-input,
-.movie-overview-input {
+.movieTitleInput,
+.movieUrlInput,
+.movieReleaseDateInput,
+.movieRatingInput,
+.movieRuntimeInput,
+.movieGenresInput,
+.movieOverviewInput {
     padding: 0.5rem;
     border-radius: 0.25rem;
     border: 1px solid #ccc;
 }
 
-.submit-movie-btn {
+.submitMovieBtn {
     height: 37px;
     width: 90px;
 

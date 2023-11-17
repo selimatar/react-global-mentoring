@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './movieTile.module.css';
+import { useRouter } from 'next/router';
 
 const MovieTile = ({ movieInfo, onClick, onEdit, onDelete }) => {
   const [showContextMenu, setShowContextMenu] = useState(false);
   const dialogRef = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -29,7 +31,7 @@ const MovieTile = ({ movieInfo, onClick, onEdit, onDelete }) => {
 
   const handleEditClick = () => {
     setShowContextMenu(false);
-    navigate(`/${movieInfo.id}/edit`);
+    router.push(`/${movieInfo.id}/edit`);
     onEdit();
   };
 

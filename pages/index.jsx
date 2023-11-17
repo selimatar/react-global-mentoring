@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MovieListPage from '../src/components/MovieListPage/movieListPage';
+import { useRouter } from 'next/router';
 
 const genreList = [
   { name: "All", id: 1 }, 
@@ -14,18 +15,14 @@ export async function getServerSideProps(context) {
   const searchQuery = contextQuery.search || '';
   const activeGenre = contextQuery.filter || genreList[0];
 
-  const query = searchQuery;
-  const sortBy = sortCriterion;
-  const genre = activeGenre;
-
-  const res = await fetch(`http://localhost:4000/movies?${buildQuery(query, sortBy, genre)}`);
+  const res = await fetch(`http://localhost:4000/movies?${buildQuery(searchQuery, sortCriterion, activeGenre)}`);
   const moviesData = await res.json();
 
   return {
     props: {
-      sortBy: sortCriterion,
-      query: searchQuery,
-      genre: activeGenre,
+      sortCriterion,
+      searchQuery,
+      activeGenre,
       initialMovies: moviesData.data,
     },
   };
@@ -45,8 +42,24 @@ function buildQuery(query, sortBy, genre) {
   return queryParts.join('&');
 }
 
-const Home = ({sortBy, query, genre, initialMovies}) => {
-  return <MovieListPage sortBy={sortBy} query={query} genre={genre} initialMovies={initialMovies}/>;
+const Home = ({sortCriterion, searchQuery, activeGenre, initialMovies}) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const query = buildQuery(searchQuery, sortCriterion, activeGenre);
+    
+    const queryParams = {
+      searchQuery: '',
+      sortCriterion: 'release_date',
+      activeGenre: 'All',
+    };
+    router.replace({
+      pathname: '/',
+      query: query ? { ...queryParams } : {},
+    });
+  }, []);
+
+  return <MovieListPage sortBy={sortCriterion} query={searchQuery} genre={activeGenre} initialMovies={initialMovies}/>;
 };
 
 export default Home;

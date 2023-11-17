@@ -1,5 +1,5 @@
 import React from 'react';
-import './movie-form.module.css';
+import styles from './movie-form.module.css';
 import { Formik, Field, Form } from 'formik';
 import { object, string, array, date, number } from 'yup';
 
@@ -40,30 +40,30 @@ const MovieForm = ({ initialMovieInfo = {}, onSubmit, successMessage }) => {
       onSubmit={handleSubmit}
     >
       {({ errors, touched, setFieldValue }) => (
-        <Form className='movie-form'>
-          {successMessage && <div className="success-message">{successMessage}</div>}
-          <div className="form-row">
-            <div className="form-col">
-              <label className="item-title" htmlFor="titleInput">Title</label>
+        <Form className={styles.movieForm}>
+          {successMessage && <div className={styles.successMessage}>{successMessage}</div>}
+          <div className={styles.formRow}>
+            <div className={styles.formCol}>
+              <label className={styles.itemTitle} htmlFor="titleInput">Title</label>
               <Field
                 type="text"
                 id="titleInput"
                 name="title"
-                className="movie-title-input"
+                className={styles.movieTitleInput}
                 placeholder="Enter title"
                 required
               />
               {errors.title && touched.title ? (
-                <div className='error-message'>{errors.title}</div>
+                <div className={styles.errorMessage}>{errors.title}</div>
               ) : null}
             </div>
-            <div className="form-col">
-              <label className="item-title" htmlFor="releaseDateInput">Release Date</label>
+            <div className={styles.formCol}>
+              <label className={styles.itemTitle} htmlFor="releaseDateInput">Release Date</label>
               <Field
                 type="date"
                 id="releaseDateInput"
                 name="release_date"
-                className="movie-release-date-input"
+                className={styles.movieReleaseDateInput}
                 required
               />
               {errors.date && touched.date ? (
@@ -72,14 +72,14 @@ const MovieForm = ({ initialMovieInfo = {}, onSubmit, successMessage }) => {
             </div>
           </div>
 
-          <div className="form-row">
-            <div className="form-col">
-              <label className="item-title" htmlFor="movieUrlInput">Movie URL</label>
+          <div className={styles.formRow}>
+            <div className={styles.formCol}>
+              <label className={styles.itemTitle} htmlFor="movieUrlInput">Movie URL</label>
               <Field
                 type="url"
                 id="movieUrlInput"
                 name="poster_path"
-                className="movie-url-input"
+                className={styles.movieUrlInput}
                 placeholder="Enter movie URL"
                 required
               />
@@ -87,26 +87,26 @@ const MovieForm = ({ initialMovieInfo = {}, onSubmit, successMessage }) => {
                 <div className='error-message'>{errors.poster_path}</div>
               ) : null}
             </div>
-            <div className="form-col">
-              <label className="item-title" htmlFor="ratingInput">Rating</label>
+            <div className={styles.formCol}>
+              <label className={styles.itemTitle} htmlFor="ratingInput">Rating</label>
               <Field
                 type="number"
                 id="ratingInput"
                 name="vote_average"
-                className="movie-rating-input"
+                className={styles.movieRatingInput}
                 placeholder="Enter movie rating"
               />
             </div>
           </div>
 
-          <div className="form-row">
-            <div className="form-col">
-              <label className="item-title" htmlFor="genresInput">Genres</label>
+          <div className={styles.formRow}>
+            <div className={styles.formCol}>
+              <label className={styles.itemTitle} htmlFor="genresInput">Genres</label>
               <Field
                 type="text"
                 id="genresInput"
                 name="genres"
-                className="movie-genres-input"
+                className={styles.movieGenresInput}
                 placeholder="Enter genres (e.g., Action, Adventure)"
                 onChange={(e) => {
                   const genreString = e.target.value;
@@ -119,32 +119,32 @@ const MovieForm = ({ initialMovieInfo = {}, onSubmit, successMessage }) => {
               ) : null}
             </div>
 
-            <div className="form-col">
-              <label className="item-title" htmlFor="runtimeInput">Runtime</label>
+            <div className={styles.formCol}>
+              <label className={styles.itemTitle} htmlFor="runtimeInput">Runtime</label>
               <Field
                 type="number"
                 id="runtimeInput"
                 name="runtime"
-                className="movie-runtime-input"
+                className={styles.movieRuntimeInput}
                 placeholder="Enter movie runtime"
                 required
               />
             </div>
           </div>
           
-          <label className="item-title" htmlFor="descriptionInput">Overview</label>
+          <label className={styles.itemTitle} htmlFor="descriptionInput">Overview</label>
           <Field
             as="textarea"
             id="descriptionInput"
             name="overview"
-            className="movie-overview-input"
+            className={styles.movieOverviewInput}
             required
           />
           {errors.overview && touched.overview ? (
             <div className='error-message'>{errors.overview}</div>
           ) : null}
           
-          <button className="submit-movie-btn" type="submit">Submit</button>
+          <button className={styles.submitMovieBtn} type="submit">Submit</button>
         </Form>
       )}
     </Formik>

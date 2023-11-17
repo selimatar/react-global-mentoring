@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import SearchForm from '../Search/searchForm';
 import Dialog from '../Dialog/dialog';
@@ -21,6 +21,8 @@ const genreList = [
 const MovieListPage = ({sortBy, query, genre, initialMovies, selectedMovieId}) => {
     const router = useRouter();
     const { movieIdParam } = router.query;
+    const [movieList, setMovieList] = useState(initialMovies);
+    const [isLoading, setIsLoading] = useState(false);
     const [showAddDialog, setShowAddDialog] = useState(false);
     const [editingMovie, setEditingMovie] = useState(null);
     const [movieId, setMovieId] = useState(movieIdParam ?? selectedMovieId);
@@ -29,6 +31,48 @@ const MovieListPage = ({sortBy, query, genre, initialMovies, selectedMovieId}) =
     const [sortCriterion, setSortCriterion] = useState(sortBy);
     const [searchQuery, setSearchQuery] = useState(query);
     const [activeGenre, setActiveGenre] = useState(genreList.find(genreItem => genreItem.name === genre) ?? genreList[0]);
+
+    const setSearchParams = (params) => {
+        router.push({
+          pathname: '/',
+          query: params,
+        });
+    };
+
+    function buildQuery(query, sortBy, genre) {
+        const queryParts = [];
+        if (query && query !== '') {
+          queryParts.push(`search=${query}&searchBy=title`);
+        }
+        if (sortBy) {
+          queryParts.push(`sortBy=${sortBy}&sortOrder=desc`);
+        }
+        if (genre.name !== 'All') {
+          queryParts.push(`filter=${genre.name}`);
+        }
+        return queryParts.join('&');
+    }
+
+    const fetchMovies = async () => {
+        setIsLoading(true);
+        try {
+          const res = await fetch(`http://localhost:4000/movies?${buildQuery(searchQuery, sortCriterion, activeGenre)}`);
+          const moviesData = await res.json();
+          setMovieList(moviesData.data);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        setSearchParams({ sortCriterion, searchQuery, activeGenre: activeGenre.name });
+    }, [sortCriterion, searchQuery, activeGenre, movieId]);
+    
+      useEffect(() => {
+        fetchMovies();
+    }, [sortCriterion, searchQuery, activeGenre]);
 
     const handleSearchSubmit = (value) => {
         return event => {
@@ -39,12 +83,11 @@ const MovieListPage = ({sortBy, query, genre, initialMovies, selectedMovieId}) =
 
     const handleTileClick = (movie) => {
         const params = { sortCriterion: sortCriterion, searchQuery: searchQuery, activeGenre: activeGenre };
-        // router.push({
-        //     pathname: `/${movie.id}`,
-        //     query: params,
-        // });
         setMovieId(movie.id);
-        router.push(`/${movie.id}`);
+        router.push({
+            pathname: `/${movie.id}`,
+            query: params,
+        });
     }
 
     const handleAddClick = () => {
@@ -84,11 +127,13 @@ const MovieListPage = ({sortBy, query, genre, initialMovies, selectedMovieId}) =
                 <SortControl currentSelection={sortCriterion} onSelectionChange={handleSortByChange} />
             </div>
             <p style={{ marginLeft: "40px" }}>
-                {initialMovies && initialMovies.length > 0 ? initialMovies.length + " movies found" : "No movies found"}
+                {movieList && movieList.length > 0 ? movieList.length + " movies found" : "No movies found"}
             </p>
             <div className={movieListPageStyles.movieListContainer}>
-                {
-                    initialMovies?.map((movie) => (
+                {isLoading ? (
+                    <p>Loading...</p>
+                ) : (
+                    movieList.map((movie) => (
                         <MovieTile
                             key={movie.title}
                             movieInfo={movie}
@@ -97,7 +142,7 @@ const MovieListPage = ({sortBy, query, genre, initialMovies, selectedMovieId}) =
                             onDelete={() => handleDeleteClick(movie)}
                         />
                     ))
-                }
+                )}
             </div>
             {showEditDialog && (
                 <EditMovieForm selectedMovie={editingMovie} onClose={handleEditClose} />
