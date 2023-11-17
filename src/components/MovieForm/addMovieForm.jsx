@@ -20,7 +20,11 @@ const AddMovieForm = ({onClose}) => {
       if (response.ok) {
         setSuccessMessage('Movie has been added successfully!');
         onClose();
-        router.push('/');
+        const { query } = router;
+        router.push({
+          pathname: router.pathname,
+          query,
+        });
       } else {
         console.log('Error adding movie');
       }

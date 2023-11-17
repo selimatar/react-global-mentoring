@@ -72,7 +72,7 @@ const MovieListPage = ({sortBy, query, genre, initialMovies, selectedMovieId}) =
     
       useEffect(() => {
         fetchMovies();
-    }, [sortCriterion, searchQuery, activeGenre]);
+    }, [sortCriterion, searchQuery, activeGenre, router.query]);
 
     const handleSearchSubmit = (value) => {
         return event => {
