@@ -70,7 +70,7 @@ const MovieListPage = ({sortBy, query, genre, initialMovies, selectedMovieId}) =
         setSearchParams({ sortCriterion, searchQuery, activeGenre: activeGenre.name });
     }, [sortCriterion, searchQuery, activeGenre, movieId]);
     
-      useEffect(() => {
+    useEffect(() => {
         fetchMovies();
     }, [sortCriterion, searchQuery, activeGenre, router.query]);
 
@@ -82,7 +82,7 @@ const MovieListPage = ({sortBy, query, genre, initialMovies, selectedMovieId}) =
     };
 
     const handleTileClick = (movie) => {
-        const params = { sortCriterion: sortCriterion, searchQuery: searchQuery, activeGenre: activeGenre };
+        const params = { sortCriterion: sortCriterion, searchQuery: searchQuery, activeGenre: activeGenre.name };
         setMovieId(movie.id);
         router.push({
             pathname: `/${movie.id}`,

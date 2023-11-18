@@ -15,6 +15,6 @@ export async function getMovieData(movieId) {
 
   return {
     movieId,
-    ...movieData.data,
+    ...movieData,
   };
 }

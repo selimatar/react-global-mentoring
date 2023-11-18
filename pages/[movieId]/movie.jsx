@@ -1,6 +1,6 @@
 import React from 'react';
-import MovieListPage from '../src/components/MovieListPage/movieListPage';
-import { getMovieData, getAllMovieIds } from '../lib/movies';
+import MovieListPage from '../../src/components/MovieListPage/movieListPage';
+import { getMovieData, getAllMovieIds } from '../../lib/movies';
 
 export async function getStaticProps({ params }) {
   const movieData = await getMovieData(params.movieId);
