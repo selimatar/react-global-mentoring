@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import MovieForm from './movieForm';
 import Dialog from '../Dialog/dialog';
-import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/router';
 
 const AddMovieForm = ({onClose}) => {
   const [successMessage, setSuccessMessage] = useState(null);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleSubmit = (movieData) => {
     fetch(`http://localhost:4000/movies`, {
@@ -20,7 +20,11 @@ const AddMovieForm = ({onClose}) => {
       if (response.ok) {
         setSuccessMessage('Movie has been added successfully!');
         onClose();
-        navigate('/');
+        const { query } = router;
+        router.push({
+          pathname: router.pathname,
+          query,
+        });
       } else {
         console.log('Error adding movie');
       }
@@ -31,7 +35,7 @@ const AddMovieForm = ({onClose}) => {
   };
 
   const handleClose = () => {
-    navigate('/');
+    router.push('/');
   }
 
   return (

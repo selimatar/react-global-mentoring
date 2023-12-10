@@ -1,5 +1,5 @@
 import React from "react";
-import "./movieDetails.css";
+import "./movieDetails.module.css";
 
 const MovieDetails = (props) => {
   const lastIndex = props.movie.genres.length - 1;

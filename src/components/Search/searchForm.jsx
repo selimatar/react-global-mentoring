@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './search-form.css'
+import styles from './search-form.module.css'
 
 const SearchForm = ({ initialQuery, onSearch }) => {
   const [query, setQuery] = useState(initialQuery);
@@ -17,14 +17,14 @@ const SearchForm = ({ initialQuery, onSearch }) => {
   return (
     <div className="search-form" style={{margin: "40px"}}>
       <input
-        className="search-input"
+        className={styles.searchInput}
         type="text"
         placeholder="What do you want to watch?" 
         value={query}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
       />
-      <button type="submit" className="search-button" onClick={onSearch(query)}>Search</button>
+      <button type="submit" className={styles.searchButton} onClick={onSearch(query)}>Search</button>
     </div>
   );
 }

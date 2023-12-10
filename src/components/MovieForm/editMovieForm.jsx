@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import MovieForm from './movieForm';
 import Dialog from '../Dialog/dialog';
-import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/router';
 
 const EditMovieForm = ({ onClose, selectedMovie }) => {
   const [successMessage, setSuccessMessage] = useState(null);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleSubmit = (movieData) => {
     const url = `http://localhost:4000/movies`;
@@ -21,7 +21,7 @@ const EditMovieForm = ({ onClose, selectedMovie }) => {
         if (response.ok) {
           setSuccessMessage('Movie data has been updated successfully!');
           onClose();
-          navigate('/');
+          router.push('/');
         } else {
           throw new Error('Failed to update movie data.');
         }
@@ -32,7 +32,7 @@ const EditMovieForm = ({ onClose, selectedMovie }) => {
   };
 
   const handleClose = () => {
-    navigate('/');
+    router.push('/');
   }
 
   return (
